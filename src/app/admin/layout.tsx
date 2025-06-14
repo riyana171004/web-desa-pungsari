@@ -1,7 +1,4 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import LayoutContent from "./LayoutContent";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,20 +10,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Desa Pungsari",
-  description: "Website Resmi Desa Pungsari",
-};
-
-export default function RootLayout({
+export default function AdminLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="id" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <LayoutContent>{children}</LayoutContent>
+        <div className="min-h-screen bg-gray-100">
+          {children}
+        </div>
       </body>
     </html>
   );
