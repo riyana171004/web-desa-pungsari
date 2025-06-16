@@ -12,16 +12,14 @@ const services = [
       'Fotocopy KTP Orang Tua',
       'Fotocopy KTP Saksi Kelahiran (2 orang)',
       'Fotocopy Buku Nikah yang dilegalisir KUA'
-    ],
-    form: '/forms/akta-kelahiran.pdf'
+    ]
   },
   {
     id: 'ektp-baru',
     title: 'E-KTP Baru (Usia 17 Tahun)',
     requirements: [
       'Fotocopy KK (jika KK belum barcode lampirkan KK asli dan fotocopy buku nikah kepala keluarga)'
-    ],
-    form: '/forms/ektp-baru.pdf'
+    ]
   },
   {
     id: 'pembaharuan-kk',
@@ -30,8 +28,7 @@ const services = [
       'KK Asli',
       'Fotocopy Ijazah (jika pembaharuan pendidikan)',
       'Fotocopy Akta Cerai/Buku Nikah (jika pembaharuan status)'
-    ],
-    form: '/forms/pembaharuan-kk.pdf'
+    ]
   },
   {
     id: 'dokumen-hilang',
@@ -40,8 +37,7 @@ const services = [
     requirements: [
       'Surat Keterangan Kehilangan dari Polsek',
       'Fotocopy dokumen yang hilang/rusak'
-    ],
-    form: '/forms/dokumen-hilang.pdf'
+    ]
   },
   {
     id: 'akta-kematian',
@@ -51,8 +47,7 @@ const services = [
       'KTP yang Meninggal',
       'Fotocopy Pelapor Kematian (jika beda KK dengan yang meninggal lampirkan fotocopy KK)',
       'Fotocopy E-KTP Saksi Kematian 2 orang (jika yang meninggal KK sendiri lampirkan fotocopy E-KTP Ketua RT setempat)'
-    ],
-    form: '/forms/akta-kematian.pdf'
+    ]
   },
   {
     id: 'kia',
@@ -63,8 +58,7 @@ const services = [
       'Fotocopy E-KTP Orang Tua',
       'Fotocopy Buku Nikah Orang Tua',
       'Foto Anak ukuran 3x4 (jika anak usia di atas 5 tahun)'
-    ],
-    form: '/forms/kia.pdf'
+    ]
   },
   {
     id: 'numpang-nikah',
@@ -79,8 +73,7 @@ const services = [
       'Pas foto background biru, ukuran: 2x3 (5 lembar) dan 4x6 (3 lembar)',
       'Fotocopy KTP Saksi (1 orang)',
       'Fotocopy Buku Nikah Orang Tua Laki-laki'
-    ],
-    form: '/forms/numpang-nikah.pdf'
+    ]
   },
   {
     id: 'keterangan-usaha',
@@ -88,8 +81,7 @@ const services = [
     requirements: [
       'Fotocopy KTP',
       'Keterangan Jenis Usaha'
-    ],
-    form: '/forms/keterangan-usaha.pdf'
+    ]
   }
 ];
 
@@ -140,19 +132,7 @@ export default function PelayananPage() {
                 </ul>
                 
                 <div className="mt-6 pt-4 border-t border-gray-100">
-                  <a
-                    href={service.form}
-                    download
-                    className="inline-flex items-center px-5 py-2.5 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors text-sm font-medium"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span className="mr-2">📄</span>
-                    Unduh Formulir {service.title}
-                  </a>
-                  <p className="text-xs text-gray-500 mt-2">
-                    * Formulir dalam format PDF. Pastikan perangkat Anda mendukung pembacaan file PDF.
-                  </p>
+                  
                 </div>
               </div>
             </div>

@@ -1,99 +1,15 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import {
-  LayoutDashboard,
-  Users,
-  FileText,
-  Settings,
-  LogOut,
-  Menu,
-  X,
-  Home
-} from 'lucide-react';
-
-const menuItems = [
-  { name: 'Dashboard', icon: LayoutDashboard, href: '/admin' },
-  { name: 'Pengguna', icon: Users, href: '/admin/users' },
-  { name: 'Artikel', icon: FileText, href: '/admin/articles' },
-  { name: 'Pengaturan', icon: Settings, href: '/admin/settings' },
-];
-
 export default function AdminDashboard() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const router = useRouter();
-
-  const handleLogout = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('/api/logout', { method: 'POST' });
-      if (response.ok) {
-        router.push('/login');
-      }
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
-  };
-
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Mobile menu button */}
-      <button
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-white shadow-md"
-      >
-        {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
+    <div className="h-full">
 
-      {/* Sidebar */}
-      <div
-        className={`${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} 
-                   md:translate-x-0 transform transition-transform duration-200 ease-in-out
-                   fixed md:static inset-y-0 left-0 z-40 w-64 bg-blue-700 text-white`}
-      >
-        <div className="flex flex-col h-full">
-          {/* Logo */}
-          <div className="flex items-center justify-center h-16 px-4 border-b border-blue-600">
-            <h1 className="text-xl font-bold">Admin Desa Pungsari</h1>
-          </div>
-
-          {/* Navigation */}
-          <nav className="flex-1 px-4 py-4 space-y-1">
-            {menuItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="flex items-center px-4 py-3 text-sm font-medium rounded-lg hover:bg-blue-600 transition-colors"
-              >
-                <item.icon className="mr-3 h-5 w-5" />
-                {item.name}
-              </a>
-            ))}
-          </nav>
-
-          {/* User & Logout */}
-          <div className="p-4 border-t border-blue-600">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center">
-                  <span className="text-white font-medium">A</span>
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm font-medium">Admin</p>
-                  <p className="text-xs text-blue-200">Administrator</p>
-                </div>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="p-2 rounded-full hover:bg-blue-600"
-                title="Keluar"
-              >
-                <LogOut size={20} />
-              </button>
-            </div>
-          </div>
+      <div className="max-w-7xl mx-auto w-full">
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h2 className="text-lg font-medium text-gray-900 mb-4">Selamat Datang di Dashboard Admin</h2>
+          <p className="text-gray-600">
+            Gunakan menu di samping untuk mengelola konten dan pengaturan website.
+          </p>
         </div>
       </div>
 
