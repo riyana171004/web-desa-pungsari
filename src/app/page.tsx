@@ -14,7 +14,7 @@ export default function Home() {
       </div>
       <h1 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">Selamat Datang di Kantor Kepala Desa Pungsari</h1>
       <p className="text-base md:text-lg text-gray-700 max-w-2xl mb-6">
-        Website resmi Kantor Kepala Desa Pungsari. Temukan informasi seputar profil desa, pelayanan masyarakat, dokumentasi kegiatan pariwisata, dan kontak layanan kami. Kami berkomitmen memberikan pelayanan terbaik untuk masyarakat Pungsari.
+        Website resmi Kantor Kepala Desa Pungsari. Temukan informasi seputar profil desa, pelayanan masyarakat, dan kontak layanan kami. Kami berkomitmen memberikan pelayanan terbaik untuk masyarakat Pungsari.
       </p>
       <div className="w-full max-w-xl rounded-lg shadow bg-white/80 p-6 mt-4">
         <h2 className="text-xl font-semibold mb-2 text-blue-800">Sambutan Kepala Desa</h2>

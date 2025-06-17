@@ -12,16 +12,27 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError('')
 
-    const res = await fetch('/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-    })
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      })
 
-    if (res.ok) {
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Terjadi kesalahan saat login')
+      }
+
       router.push('/admin')
-    } else {
-      setError('Email atau password salah')
+      router.refresh() // Refresh untuk update session
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Email atau password salah')
     }
   }
 

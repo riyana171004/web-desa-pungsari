@@ -4,7 +4,7 @@ const menu = [
   { name: "Beranda", href: "/" },
   { name: "Profile Desa", href: "/profile" },
   { name: "Pelayanan Kami", href: "/pelayanan" },
-  { name: "Pariwisata - Dokumentasi Kegiatan", href: "/pariwisata" },
+  { name: "Pariwisata dan Dokumentasi", href: "/pariwisata" },
   { name: "Kontak", href: "/kontak" },
 ];
 

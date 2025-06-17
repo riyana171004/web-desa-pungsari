@@ -60,70 +60,66 @@ export default function AdminLayout({
   };
 
   return (
-    <html lang="id" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="flex h-screen bg-gray-100">
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-white shadow-md"
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+    <div className={`${geistSans.variable} ${geistMono.variable} antialiased flex h-screen bg-gray-100`}>
+      {/* Mobile menu button */}
+      <button
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-white shadow-md"
+      >
+        {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
 
-          {/* Sidebar */}
-          <div
-            className={`${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'} 
-                     transform transition-transform duration-200 ease-in-out
-                     fixed md:static inset-y-0 left-0 z-40 w-64 bg-blue-700 text-white`}
-          >
-            <div className="flex flex-col h-full">
-              {/* Logo */}
-              <div className="flex items-center justify-center h-16 px-4 border-b border-blue-600">
-                <h1 className="text-xl font-bold">Admin Desa Pungsari</h1>
-              </div>
-
-              {/* Navigation */}
-              <nav className="flex-1 px-4 py-4 space-y-1">
-                {menuItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-                      pathname === item.href ? 'bg-blue-600' : 'hover:bg-blue-600'
-                    }`}
-                  >
-                    <span className="mr-3">
-                      {getIcon(item.icon)}
-                    </span>
-                    {item.name}
-                  </Link>
-                ))}
-              </nav>
-
-              {/* Logout */}
-              <div className="p-4 border-t border-blue-600">
-                <button
-                  onClick={handleLogout}
-                  className="w-full flex items-center px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 rounded-lg transition-colors"
-                >
-                  <svg className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                  </svg>
-                  Keluar
-                </button>
-              </div>
-            </div>
+      {/* Sidebar */}
+      <div
+        className={`${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'} 
+                 transform transition-transform duration-200 ease-in-out
+                 fixed md:static inset-y-0 left-0 z-40 w-64 bg-blue-700 text-white`}
+      >
+        <div className="flex flex-col h-full">
+          {/* Logo */}
+          <div className="flex items-center justify-center h-16 px-4 border-b border-blue-600">
+            <h1 className="text-xl font-bold">Admin Desa Pungsari</h1>
           </div>
 
-          {/* Main Content */}
-          <div className="flex-1 flex flex-col overflow-hidden">
-            <main className="flex-1 overflow-y-auto p-4 md:p-6">
-              {children}
-            </main>
+          {/* Navigation */}
+          <nav className="flex-1 px-4 py-4 space-y-1">
+            {menuItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                  pathname === item.href ? 'bg-blue-600' : 'hover:bg-blue-600'
+                }`}
+              >
+                <span className="mr-3">
+                  {getIcon(item.icon)}
+                </span>
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Logout */}
+          <div className="p-4 border-t border-blue-600">
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 rounded-lg transition-colors"
+            >
+              <svg className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Keluar
+            </button>
           </div>
         </div>
-      </body>
-    </html>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6">
+          {children}
+        </main>
+      </div>
+    </div>
   );
 }
