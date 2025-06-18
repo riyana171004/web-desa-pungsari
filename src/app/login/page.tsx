@@ -1,18 +1,22 @@
 // app/login/page.tsx
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function LoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const callbackUrl = searchParams.get('callbackUrl') || '/admin'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    setIsLoading(true)
 
     try {
       const res = await fetch('/api/login', {
@@ -29,10 +33,13 @@ export default function LoginPage() {
         throw new Error(data.error || 'Terjadi kesalahan saat login')
       }
 
-      router.push('/admin')
+      // Redirect ke callbackUrl atau halaman admin default
+      router.push(callbackUrl)
       router.refresh() // Refresh untuk update session
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Email atau password salah')
+    } finally {
+      setIsLoading(false)
     }
   }
 

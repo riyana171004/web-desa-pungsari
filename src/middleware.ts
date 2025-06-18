@@ -1,23 +1,45 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// This function can be marked `async` if using `await` inside
+// Path yang tidak memerlukan autentikasi
+const publicPaths = [
+  '/',
+  '/login',
+  '/api/login',
+  '/_next',
+  '/favicon.ico',
+  '/api/auth',
+  '/pariwisata',
+  // Tambahkan path public lainnya di sini
+];
+
 export function middleware(request: NextRequest) {
-  // Skip middleware for public paths
-  const publicPaths = ['/api/auth', '/_next', '/favicon.ico'];
-  if (publicPaths.some(path => request.nextUrl.pathname.startsWith(path))) {
+  const { pathname } = request.nextUrl;
+
+  // Skip middleware untuk path public
+  if (publicPaths.some(path => 
+    pathname === path || 
+    pathname.startsWith(`${path}/`) ||
+    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/api/auth/') ||
+    pathname.match(/\.(svg|png|jpg|jpeg|gif|webp|css|js)$/)
+  )) {
     return NextResponse.next();
   }
 
-  // For now, we'll just allow all requests
-  // In a real app, you would check for a valid session or token here
-  // Example:
-  // const token = request.cookies.get('auth-token');
-  // if (!token) {
-  //   return NextResponse.redirect(new URL('/login', request.url));
-  // }
+  // Cek session untuk rute admin
+  if (pathname.startsWith('/admin')) {
+    const session = request.cookies.get('admin_session')?.value;
 
-  
+    if (!session) {
+      // Redirect ke halaman login jika tidak ada session
+      const loginUrl = new URL('/login', request.url);
+      // Simpan URL yang dituju untuk redirect setelah login
+      loginUrl.searchParams.set('callbackUrl', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
+
   return NextResponse.next();
 }
 

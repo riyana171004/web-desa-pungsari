@@ -1,3 +1,6 @@
+import React from 'react';
+import WhatsAppButton from '@/components/WhatsAppButton';
+
 export default function KontakPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 py-10 text-center">
@@ -9,10 +12,7 @@ export default function KontakPage() {
       <div className="mb-8 flex flex-col items-center gap-4">
         <h2 className="text-lg font-semibold text-blue-800">Reach Out</h2>
         <div className="flex gap-4">
-          <a href="https://wa.me/6281226785140" target="_blank" rel="noopener noreferrer" className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-all">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12c0 5.385 4.365 9.75 9.75 9.75 1.7 0 3.29-.425 4.68-1.17l3.07.82a.75.75 0 0 0 .92-.92l-.82-3.07A9.708 9.708 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12z" /></svg>
-            WhatsApp
-          </a>
+          <WhatsAppButton />
           <a href="https://instagram.com/daya_warga_desapungsari" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 hover:from-pink-600 hover:via-red-600 hover:to-yellow-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-all">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M7.5 2.25h9A5.25 5.25 0 0 1 21.75 7.5v9a5.25 5.25 0 0 1-5.25 5.25h-9A5.25 5.25 0 0 1 2.25 16.5v-9A5.25 5.25 0 0 1 7.5 2.25z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75h.008v.008h-.008V6.75z" /></svg>
             Instagram
