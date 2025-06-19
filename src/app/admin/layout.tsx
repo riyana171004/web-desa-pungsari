@@ -27,13 +27,10 @@ const menuItems: MenuItem[] = [
   { name: 'Dashboard', icon: 'dashboard', href: '/admin' },
   { name: 'Pariwisata', icon: 'map', href: '/admin/pariwisata' },
   { name: 'Dokumentasi', icon: 'camera', href: '/admin/dokumentasi' },
-  { name: 'Pengguna', icon: 'users', href: '/admin/users' },
-  { name: 'Artikel', icon: 'file-text', href: '/admin/articles' },
   { 
     name: 'Pengaturan', 
     icon: 'settings',
     items: [
-      { name: 'Pengaturan Umum', href: '/admin/settings' },
       { name: 'WhatsApp', href: '/admin/pengaturan/whatsapp' }
     ]
   },

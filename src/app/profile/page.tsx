@@ -35,7 +35,8 @@ export default function ProfilePage() {
                 <li>Sukidi : 1998–2005</li>
                 <li>Sukidi : 2005–2013</li>
                 <li>Suparmin : 2013–2019</li>
-                <li>Joko Sarono : 2019–sekarang</li>
+                <li>Joko Sarono : 2019–2023</li>
+                <li>Suparmin : 2024–Sekarang</li>
               </ul>
             </section>
 
