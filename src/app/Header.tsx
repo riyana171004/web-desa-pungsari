@@ -10,15 +10,19 @@ const menu = [
 
 export default function Header() {
   return (
-    <header className="w-full flex items-center justify-between py-4 px-6 border-b bg-white/80 backdrop-blur-md sticky top-0 z-50">
+    <header className="w-full flex items-center justify-between py-5 px-6 bg-gradient-to-r from-green-800 to-green-700 shadow-lg">
       <div className="flex items-center">
-        <img src="/assets/logo.png" alt="Logo Kantor Desa Pungsari" className="h-10 w-auto mr-3" />
+        <img src="/assets/logo.png" alt="Logo Kantor Desa Pungsari" className="h-14 w-auto mr-3" />
+        <div className="hidden md:block">
+          <h1 className="text-xl font-bold text-white">Desa Pungsari</h1>
+          <p className="text-xs text-yellow-100">Kecamatan Plupuh, Sragen</p>
+        </div>
       </div>
       <nav>
-        <ul className="flex gap-4 md:gap-8 text-sm md:text-base font-medium">
+        <ul className="flex gap-4 md:gap-8 text-base md:text-lg font-medium">
           {menu.map((item) => (
             <li key={item.name}>
-              <Link href={item.href} className="hover:text-blue-700 transition-colors">
+              <Link href={item.href} className="text-white hover:text-yellow-300 font-bold transition-colors">
                 {item.name}
               </Link>
             </li>

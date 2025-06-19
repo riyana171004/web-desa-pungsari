@@ -19,6 +19,23 @@
   }
 }
 
+/* Text stroke effect */
+.text-stroke {
+  color: white;
+  text-shadow: 
+    -1px -1px 0 #000,
+     0   -1px 0 #000,
+     1px -1px 0 #000,
+     1px  0   0 #000,
+     1px  1px 0 #000,
+     0    1px 0 #000,
+    -1px  1px 0 #000,
+    -1px  0   0 #000;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 2px;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
