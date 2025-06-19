@@ -145,15 +145,15 @@ export default function PelayananPage() {
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <h3 className="font-semibold text-blue-700 mb-2">Jam Layanan:</h3>
-            <p className="text-gray-700">Senin - Kamis: 07.30 - 15.30 WIB</p>
-            <p className="text-gray-700">Jumat: 07.30 - 11.00 WIB</p>
+            <p className="text-gray-700">Senin - Kamis: 08.00 - 15.30 WIB</p>
+            <p className="text-gray-700">Jumat: 08.00 - 13.30 WIB</p>
             <p className="text-gray-700">Sabtu - Minggu: Libur</p>
           </div>
           <div>
             <h3 className="font-semibold text-blue-700 mb-2">Kontak:</h3>
             <p className="text-gray-700">Kantor Desa Pungsari</p>
-            <p className="text-gray-700">Email: desapungsari@example.com</p>
-            <p className="text-gray-700">Telepon: (0271) 1234567</p>
+            <p className="text-gray-700">Email: desapungsari123@gmail.com</p>
+            <p className="text-gray-700">WhatsApp: +62 812-2678-5140</p>
           </div>
         </div>
       </div>

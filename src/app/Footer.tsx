@@ -67,11 +67,11 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-4 text-yellow-300">Jam Layanan</h3>
             <div className="text-sm text-gray-200 space-y-2">
-              <p className="font-medium">Senin - Jumat</p>
-              <p className="mb-2">08:00 - 16:00 WIB</p>
-              <p className="font-medium">Sabtu</p>
-              <p>08:00 - 14:00 WIB</p>
-              <p className="text-xs mt-4 text-gray-300">*Tutup pada hari Minggu dan hari libur nasional</p>
+              <p className="font-medium">Senin - Kamis</p>
+              <p className="mb-2">08:00 - 15:30 WIB</p>
+              <p className="font-medium">Jumat</p>
+              <p>08:00 - 13:30 WIB</p>
+              <p className="text-xs mt-4 text-gray-300">*Tutup pada hari Sabtu, Minggu, dan hari libur nasional</p>
             </div>
           </div>
         </div>
