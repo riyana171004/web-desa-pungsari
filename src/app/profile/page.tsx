@@ -1,6 +1,20 @@
 "use client";
 import { useState } from 'react';
 import DemografiChart from './demografi-chart';
+
+// Batik Background Component
+const BatikBackground = () => (
+  <div className="fixed inset-0 -z-10">
+    <div 
+      className="absolute inset-0 bg-cover bg-center" 
+      style={{ 
+        backgroundImage: "url('/assets/latarbatik.jpg')",
+        opacity: 0.1
+      }}
+    />
+  </div>
+);
+
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState('Sejarah');
 
@@ -95,25 +109,30 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen px-4 py-10 bg-gray-50">
-      <h1 className="text-3xl font-bold text-blue-900 mb-6">Profil Desa Pungsari</h1>
-      <div className="flex flex-wrap gap-4 mb-8 justify-center">
-        {['Sejarah', 'Visi Misi', 'Struktur Organisasi', 'Data Demografi dan Statistik'].map((tab) => (
-          <button
-            key={tab}
-            className={`px-4 py-2 rounded-lg shadow-sm transition-all duration-200 ${
-              activeTab === tab
-                ? 'bg-blue-900 text-white'
-                : 'bg-white text-blue-900 border border-blue-900 hover:bg-blue-100'
-            }`}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
-      <div className="max-w-4xl w-full bg-white shadow-md rounded-xl p-6">
-        {renderContent()}
+    <div className="min-h-screen">
+      <BatikBackground />
+      <div className="relative z-10">
+        <div className="flex flex-col items-center px-4 py-10">
+          <h1 className="text-3xl font-bold text-blue-900 mb-6">Profil Desa Pungsari</h1>
+          <div className="flex flex-wrap gap-4 mb-8 justify-center">
+            {['Sejarah', 'Visi Misi', 'Struktur Organisasi', 'Data Demografi dan Statistik'].map((tab) => (
+              <button
+                key={tab}
+                className={`px-4 py-2 rounded-lg shadow-sm transition-all duration-200 ${
+                  activeTab === tab
+                    ? 'bg-blue-900 text-white'
+                    : 'bg-white text-blue-900 border border-blue-900 hover:bg-blue-100'
+                }`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+          <div className="max-w-4xl w-full bg-white/90 backdrop-blur-sm shadow-lg rounded-xl p-6">
+            {renderContent()}
+          </div>
+        </div>
       </div>
     </div>
   );

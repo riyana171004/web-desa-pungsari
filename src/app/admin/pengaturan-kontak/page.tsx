@@ -2,30 +2,45 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast';
+
+interface SettingItem {
+  id: string;
+  nama: string;
+  nilai: string;
+  keterangan: string;
+  created_at: string;
+  updated_at: string;
+}
 
 export default function PengaturanKontak() {
   const [whatsapp, setWhatsapp] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
 
   useEffect(() => {
+    // Show browser alert when component mounts
+    alert('Halaman Pengaturan WhatsApp. Silakan masukkan nomor WhatsApp yang akan digunakan untuk kontak.');
+    
     const fetchData = async () => {
       try {
         const res = await fetch('/api/pengaturan-kontak')
-        const data = await res.json()
         
-        if (res.ok) {
-          const whatsappSetting = data.find((item: any) => item.nama === 'whatsapp')
-          if (whatsappSetting) {
-            setWhatsapp(whatsappSetting.nilai)
-          }
-        } else {
-          throw new Error(data.error || 'Gagal mengambil data')
+        if (!res.ok) {
+          throw new Error('Gagal mengambil data dari server')
         }
-      } catch (err: any) {
-        setError(err.message)
+        
+        const data: SettingItem[] = await res.json()
+        const whatsappSetting = data.find(item => item.nama === 'whatsapp')
+        
+        if (whatsappSetting) {
+          setWhatsapp(whatsappSetting.nilai)
+        }
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Terjadi kesalahan saat memuat data'
+        setError(errorMessage)
+        toast.error(errorMessage)
       } finally {
         setIsLoading(false)
       }
@@ -34,11 +49,11 @@ export default function PengaturanKontak() {
     fetchData()
   }, [])
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    alert('Form sedang diproses...')
     setIsSaving(true)
     setError('')
-    setSuccess('')
 
     try {
       const res = await fetch('/api/pengaturan-kontak', {
@@ -53,16 +68,18 @@ export default function PengaturanKontak() {
         }),
       })
 
-      const data = await res.json()
-
       if (!res.ok) {
-        throw new Error(data.error || 'Gagal menyimpan pengaturan')
+        const errorData = await res.json()
+        throw new Error(errorData.error || 'Gagal menyimpan pengaturan')
       }
 
-      setSuccess('Pengaturan berhasil disimpan')
-      setTimeout(() => setSuccess(''), 3000)
-    } catch (err: any) {
-      setError(err.message)
+      // Show browser alert on successful save
+      window.alert('Pengaturan WhatsApp berhasil disimpan!');
+      toast.success('Pengaturan WhatsApp berhasil disimpan!');
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Terjadi kesalahan yang tidak diketahui'
+      setError(errorMessage)
+      toast.error(errorMessage)
     } finally {
       setIsSaving(false)
     }
@@ -85,12 +102,6 @@ export default function PengaturanKontak() {
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
           {error}
-        </div>
-      )}
-
-      {success && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-          {success}
         </div>
       )}
 

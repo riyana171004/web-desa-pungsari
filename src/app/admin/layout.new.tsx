@@ -97,6 +97,7 @@ export default function AdminLayout({
           },
         }}
       />
+      
       {/* Mobile menu button */}
       <button
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

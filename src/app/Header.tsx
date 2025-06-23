@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { usePathname } from 'next/navigation';
 
 const menu = [
   { name: "Beranda", href: "/" },
@@ -9,6 +10,16 @@ const menu = [
 ];
 
 export default function Header() {
+  const pathname = usePathname();
+  
+  // Special handling for home page
+  const isActive = (href: string) => {
+    if (href === '/') {
+      return pathname === href;
+    }
+    return pathname?.startsWith(href);
+  };
+
   return (
     <header className="w-full flex items-center justify-between py-5 px-6 bg-gradient-to-r from-green-800 to-green-700 shadow-lg">
       <div className="flex items-center">
@@ -20,13 +31,19 @@ export default function Header() {
       </div>
       <nav>
         <ul className="flex gap-4 md:gap-8 text-base md:text-lg font-medium">
-          {menu.map((item) => (
-            <li key={item.name}>
-              <Link href={item.href} className="text-white hover:text-yellow-300 font-bold transition-colors">
-                {item.name}
-              </Link>
-            </li>
-          ))}
+          {menu.map((item) => {
+            const active = isActive(item.href);
+            return (
+              <li key={item.name}>
+                <Link 
+                  href={item.href} 
+                  className={`${active ? 'text-yellow-300' : 'text-white'} hover:text-yellow-300 font-bold transition-colors`}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </header>
