@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
-import { writeFile } from 'fs/promises'
-import { join } from 'path'
 import { prisma } from '@/lib/prisma'
+import { put } from '@vercel/blob'
 
 export async function GET() {
   try {
@@ -31,27 +30,18 @@ export async function POST(request: Request) {
       )
     }
 
-    // Simpan file
+    // Upload ke Vercel Blob
     const bytes = await file.arrayBuffer()
-    const buffer = Buffer.from(bytes)
     const filename = `${Date.now()}-${file.name}`
-    const path = join(process.cwd(), 'public', 'uploads', 'dokumentasi', filename)
-    
-    // Buat direktori jika belum ada
-    const fs = await import('fs')
-    const dir = join(process.cwd(), 'public', 'uploads', 'dokumentasi')
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true })
-    }
-    
-    await writeFile(path, buffer)
+    const blob = await put(filename, bytes, { access: 'public' })
+    const imageUrl = blob.url
 
     // Simpan ke database
     const data = await prisma.dokumentasi.create({
       data: {
         nama,
         deskripsi,
-        gambar: `/uploads/dokumentasi/${filename}`,
+        gambar: imageUrl, // Simpan URL dari Vercel Blob
       },
     })
 

@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server'
-import { writeFile, unlink } from 'fs/promises'
-import { join } from 'path'
 import { prisma } from '@/lib/prisma'
+import { put, del } from '@vercel/blob'
 
-// Tambahkan tipe untuk error handling
 type ErrorWithMessage = {
   message: string;
 };
@@ -59,27 +57,22 @@ export async function PUT(request: Request, { params }: Params) {
 
     let gambar = existing.gambar
 
-    // Jika ada file baru, simpan file baru dan hapus yang lama
+    // Jika ada file baru, upload ke Vercel Blob dan hapus yang lama
     if (file) {
-      // Hapus file lama
+      // Hapus file lama dari Vercel Blob
       if (existing.gambar) {
         try {
-          const oldPath = join(process.cwd(), 'public', existing.gambar)
-          await unlink(oldPath)
+          await del(existing.gambar)
         } catch (err) {
-          console.error('Gagal menghapus file lama:', err)
+          console.error('Gagal menghapus file lama dari Vercel Blob:', err)
         }
       }
 
-      // Simpan file baru
+      // Upload file baru ke Vercel Blob
       const bytes = await file.arrayBuffer()
-      const buffer = Buffer.from(bytes)
       const filename = `${Date.now()}-${file.name}`
-      const path = join(process.cwd(), 'public', 'uploads', 'dokumentasi', filename)
-      
-      await writeFile(path, buffer)
-      
-      gambar = `/uploads/dokumentasi/${filename}`
+      const blob = await put(filename, bytes, { access: 'public' })
+      gambar = blob.url // Simpan URL dari Vercel Blob
     }
 
     // Update data di database
@@ -118,13 +111,12 @@ export async function DELETE(request: Request, { params }: Params) {
       )
     }
 
-    // Hapus file gambar
+    // Hapus file gambar dari Vercel Blob
     if (existing.gambar) {
       try {
-        const path = join(process.cwd(), 'public', existing.gambar)
-        await unlink(path)
+        await del(existing.gambar)
       } catch (err) {
-        console.error('Gagal menghapus file:', err)
+        console.error('Gagal menghapus file dari Vercel Blob:', err)
       }
     }
 

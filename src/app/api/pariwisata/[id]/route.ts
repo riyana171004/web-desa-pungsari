@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { writeFile, unlink } from 'fs/promises'
-import { join } from 'path'
+import { put, del } from '@vercel/blob'
 
 export async function GET(
   request: Request,
@@ -56,25 +55,20 @@ export async function PUT(
 
     // Jika ada file baru diupload
     if (file && file.size > 0) {
-      // Hapus file lama jika ada
+      // Hapus file lama dari Vercel Blob jika ada
       if (existing.gambar) {
         try {
-          const oldPath = join(process.cwd(), 'public', existing.gambar)
-          await unlink(oldPath)
+          await del(existing.gambar)
         } catch (err) {
-          console.error('Gagal menghapus file lama:', err)
+          console.error('Gagal menghapus file lama dari Vercel Blob:', err)
         }
       }
 
-      // Simpan file baru
+      // Upload file baru ke Vercel Blob
       const bytes = await file.arrayBuffer()
-      const buffer = Buffer.from(bytes)
       const filename = `${Date.now()}-${file.name}`
-      const uploadDir = join(process.cwd(), 'public', 'uploads')
-      const path = join(uploadDir, filename)
-      
-      await writeFile(path, buffer)
-      gambar = `/uploads/${filename}`
+      const blob = await put(filename, bytes, { access: 'public' })
+      gambar = blob.url // Simpan URL dari Vercel Blob
     }
 
     // Update data
@@ -104,7 +98,7 @@ export async function DELETE(
   try {
     const { id } = params
     
-    // Hapus file gambar terkait
+    // Hapus file gambar terkait dari Vercel Blob
     const existing = await prisma.pariwisata.findUnique({
       where: { id },
     })
@@ -116,13 +110,12 @@ export async function DELETE(
       )
     }
 
-    // Hapus file gambar jika ada
+    // Hapus file gambar dari Vercel Blob jika ada
     if (existing.gambar) {
       try {
-        const path = join(process.cwd(), 'public', existing.gambar)
-        await unlink(path)
+        await del(existing.gambar)
       } catch (err) {
-        console.error('Gagal menghapus file:', err)
+        console.error('Gagal menghapus file dari Vercel Blob:', err)
       }
     }
 

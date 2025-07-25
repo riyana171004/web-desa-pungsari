@@ -8,11 +8,11 @@ export async function GET() {
     });
 
     if (!setting) {
-      // Buat pengaturan default jika belum ada
+      // Buat pengaturan default jika belum ada nomor
       const newSetting = await prisma.pengaturanKontak.create({
         data: {
           nama: 'whatsapp',
-          nilai: '628123456789', // Nomor default
+          nilai: '681226785140', // Nomor default
           keterangan: 'Nomor WhatsApp untuk kontak',
         },
       });
