@@ -2,28 +2,28 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { FaImage, FaSpinner } from 'react-icons/fa'
+import Image from 'next/image'
 
 interface DokumentasiFormData {
-  nama: string;
-  deskripsi: string;
-  gambar: File | null;
-  preview: string | null;
+  nama: string
+  deskripsi: string
+  gambar: File | null
+  preview: string | null
 }
 
 interface DokumentasiFormProps {
   initialData?: {
-    id?: string;
-    nama: string;
-    deskripsi: string;
-    gambar: string;
-  } | null;
-  onSubmit?: (data: FormData) => Promise<void>;
+    id?: string
+    nama: string
+    deskripsi: string
+    gambar: string
+  } | null
+  onSubmit?: (data: FormData) => Promise<void>
 }
 
-export default function DokumentasiForm({ 
-  initialData = null, 
-  onSubmit = async () => {} 
+export default function DokumentasiForm({
+  initialData = null,
+  onSubmit
 }: DokumentasiFormProps) {
   const [formData, setFormData] = useState<DokumentasiFormData>({
     nama: '',
@@ -78,23 +78,20 @@ export default function DokumentasiForm({
     }
 
     try {
-      const url = initialData 
-        ? `/api/dokumentasi/${initialData.id}`
-        : '/api/dokumentasi'
-      
-      const method = initialData ? 'PUT' : 'POST'
-      
-      const res = await fetch(url, {
-        method,
-        body: formDataToSend
-      })
-
-      if (!res.ok) {
-        throw new Error(initialData ? 'Gagal memperbarui dokumentasi' : 'Gagal menambahkan dokumentasi')
+      if (onSubmit) {
+        await onSubmit(formDataToSend) // Gunakan onSubmit dari prop jika ada
+      } else {
+        const url = initialData
+          ? `/api/dokumentasi/${initialData.id}`
+          : '/api/dokumentasi'
+        const method = initialData ? 'PUT' : 'POST'
+        const res = await fetch(url, { method, body: formDataToSend })
+        if (!res.ok) {
+          throw new Error(initialData ? 'Gagal memperbarui dokumentasi' : 'Gagal menambahkan dokumentasi')
+        }
+        router.push('/admin/dokumentasi')
+        router.refresh()
       }
-
-      router.push('/admin/dokumentasi')
-      router.refresh()
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : 'Terjadi kesalahan'
       setError(errorMessage)
@@ -108,7 +105,7 @@ export default function DokumentasiForm({
       <h2 className="text-xl font-semibold mb-4">
         {initialData ? 'Edit' : 'Tambah'} Dokumentasi
       </h2>
-      
+
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
           {error}
@@ -153,9 +150,11 @@ export default function DokumentasiForm({
           />
           {formData.preview && (
             <div className="mt-2">
-              <img 
-                src={formData.preview} 
-                alt="Preview" 
+              <Image
+                src={formData.preview}
+                alt="Preview"
+                width={300}
+                height={160}
                 className="h-40 w-auto object-cover rounded"
               />
             </div>

@@ -1,16 +1,18 @@
-// app/login/page.tsx
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  // Ambil callbackUrl dari search params
   const callbackUrl = searchParams.get('callbackUrl') || '/admin'
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,9 +35,8 @@ export default function LoginPage() {
         throw new Error(data.error || 'Terjadi kesalahan saat login')
       }
 
-      // Redirect ke callbackUrl atau halaman admin default
       router.push(callbackUrl)
-      router.refresh() // Refresh untuk update session
+      router.refresh()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Email atau password salah')
     } finally {
@@ -64,10 +65,22 @@ export default function LoginPage() {
           className="w-full p-2 border border-gray-300 rounded"
           required
         />
-        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
-          Login
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full bg-blue-600 text-white p-2 rounded disabled:opacity-50"
+        >
+          {isLoading ? 'Loading...' : 'Login'}
         </button>
       </form>
     </main>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   )
 }

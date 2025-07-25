@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { PencilIcon } from '@heroicons/react/24/outline'
 import DeleteConfirmation from '@/components/DeleteConfirmation'
+import Image from 'next/image'
 
 interface Pariwisata {
   id: string
@@ -89,10 +90,12 @@ export default function PariwisataAdminPage() {
             <li key={item.id} className="p-4 hover:bg-gray-50">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
-                  <img 
-                    src={item.gambar} 
-                    alt={item.nama} 
-                    className="h-16 w-16 object-cover rounded"
+                  <Image
+                  src={item.gambar}
+                  alt={item.nama}
+                  width={64}   // wajib isi width
+                  height={64}  // wajib isi height
+                  className="h-16 w-16 object-cover rounded"
                   />
                   <div>
                     <h3 className="text-lg font-medium">{item.nama}</h3>

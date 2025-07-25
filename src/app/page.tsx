@@ -8,11 +8,11 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Main Batik Background */}
       <div className="fixed inset-0 -z-10">
-        <div 
-          className="absolute inset-0 bg-cover bg-center" 
-          style={{ 
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
             backgroundImage: "url('/assets/latarbatik.jpg')",
-            opacity: 0.1
+            opacity: 0.1,
           }}
         />
       </div>
@@ -22,10 +22,12 @@ export default function Home() {
         {/* Hero Section with Batik Background */}
         <div className="relative w-full h-[60vh] md:h-[80vh] overflow-hidden">
           <div className="absolute inset-0">
-            <img 
-              src="/assets/batik.jpg" 
-              alt="Batik Desa Pungsari" 
-              className="w-full h-full object-cover object-center"
+            <Image
+              src="/assets/batik.jpg"
+              alt="Batik Desa Pungsari"
+              fill
+              className="object-cover object-center"
+              priority
             />
             <div className="absolute inset-0 flex items-center justify-center text-center p-4">
               <div className="relative">
@@ -59,11 +61,13 @@ export default function Home() {
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-16">
             <div className="md:flex">
               <div className="md:w-1/3 bg-blue-700 p-8 flex flex-col items-center justify-center text-center">
-                <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-white shadow-lg mb-6">
-                  <img 
-                    src="/assets/kades.jpg" 
-                    alt="Kepala Desa Pungsari" 
-                    className="w-full h-full object-cover"
+                <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-white shadow-lg mb-6 relative">
+                  <Image
+                    src="/assets/kades.jpg"
+                    alt="Kepala Desa Pungsari"
+                    fill
+                    className="object-cover"
+                    priority
                   />
                 </div>
                 <h3 className="text-2xl font-bold text-white">Suparmin</h3>
@@ -74,11 +78,11 @@ export default function Home() {
                   Sambutan <span className="text-blue-600">Kepala Desa</span>
                 </h2>
                 <div className="prose max-w-none text-gray-700 space-y-4">
-                  <p className="italic">Assalamu'alaikum warahmatullahi wabarakatuh,</p>
+                  <p className="italic">Assalamu&apos;alaikum warahmatullahi wabarakatuh,</p>
                   <p>Selamat datang di website resmi Desa Pungsari. Dengan segala kerendahan hati, saya mengucapkan terima kasih atas kunjungan Anda ke situs web kami.</p>
                   <p>Website ini kami hadirkan sebagai media informasi dan komunikasi antara pemerintah desa dengan seluruh lapisan masyarakat. Melalui website ini, kami berkomitmen untuk terus meningkatkan pelayanan publik yang transparan, akuntabel, dan berkualitas.</p>
                   <p>Kami mengajak seluruh elemen masyarakat untuk bersama-sama membangun desa yang lebih maju, mandiri, dan sejahtera. Mari kita jaga semangat gotong royong yang telah menjadi ciri khas masyarakat Desa Pungsari.</p>
-                  <p className="italic">Wassalamu'alaikum warahmatullahi wabarakatuh.</p>
+                  <p className="italic">Wassalamu&apos;alaikum warahmatullahi wabarakatuh.</p>
                 </div>
                 <div className="mt-8 pt-6 border-t border-gray-200">
                   <div className="flex items-center">
@@ -98,22 +102,25 @@ export default function Home() {
               <h2 className="text-3xl font-bold text-gray-800 mb-3">Profil Geografis</h2>
               <div className="w-20 h-1 bg-blue-600 mx-auto"></div>
             </div>
-            
+
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
               <div className="relative w-full h-96 md:h-[500px]">
-                <img
+                <Image
                   src="/assets/geografi.jpg"
                   alt="Peta dan Kondisi Geografis Desa Pungsari"
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  priority
                 />
               </div>
-              
+
               <div className="p-6 md:p-8">
                 <p className="text-lg text-gray-700 leading-relaxed mb-6">
                   Secara geografis, Desa Pungsari terletak di Kecamatan Plupuh sebelah barat yang berbatasan dengan Kecamatan Kalijambe. 
                   Secara administratif, Desa Pungsari berada di wilayah Kecamatan Plupuh, Kabupaten Sragen, Provinsi Jawa Tengah.
                 </p>
-                
+
+                {/* Luas, Koordinat, Iklim */}
                 <div className="grid md:grid-cols-3 gap-6 mb-8">
                   {/* Coordinates */}
                   <div className="bg-blue-50 p-5 rounded-xl">
@@ -127,11 +134,11 @@ export default function Home() {
                     <ul className="space-y-2 text-gray-700">
                       <li className="flex items-start">
                         <span className="text-blue-600 mr-2">•</span>
-                        <span>110°52'45.7" E (110.8793614)</span>
+                        <span>110°52&apos;45.7&quot; E (110.8793614)</span>
                       </li>
                       <li className="flex items-start">
                         <span className="text-blue-600 mr-2">•</span>
-                        <span>7°27'44.0" S (-7.4622351)</span>
+                        <span>7°27&apos;44.0&quot; S (-7.4622351)</span>
                       </li>
                       <li className="flex items-start">
                         <span className="text-blue-600 mr-2">•</span>
@@ -139,7 +146,7 @@ export default function Home() {
                       </li>
                     </ul>
                   </div>
-                  
+
                   {/* Area */}
                   <div className="bg-green-50 p-5 rounded-xl">
                     <h3 className="text-lg font-semibold text-green-900 mb-3 flex items-center">
@@ -172,7 +179,7 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Climate */}
                   <div className="bg-amber-50 p-5 rounded-xl">
                     <h3 className="text-lg font-semibold text-amber-900 mb-3 flex items-center">
@@ -192,12 +199,13 @@ export default function Home() {
                       </div>
                       <div className="flex items-center justify-between bg-white p-3 rounded-lg">
                         <span className="text-gray-700">Musim</span>
-                        <span className="font-semibold text-gray-900">Kemarau & Hujan</span>
+                        <span className="font-semibold text-gray-900">Kemarau &amp; Hujan</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                
+
+                {/* Boundaries & Administrative Area */}
                 <div className="grid md:grid-cols-2 gap-8">
                   {/* Boundaries */}
                   <div>
@@ -227,7 +235,7 @@ export default function Home() {
                       ))}
                     </div>
                   </div>
-                  
+
                   {/* Administrative Area */}
                   <div>
                     <h3 className="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200 flex items-center">
@@ -261,7 +269,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> {/* End Geographic Info Section */}
         </div>
       </div>
     </div>

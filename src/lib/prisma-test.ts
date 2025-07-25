@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 // This script tests if Prisma Client is properly generated and can connect to the database
 
 async function testPrisma() {
-  const prisma = new PrismaClient() as any;
+  const prisma = new PrismaClient();
   
   try {
     console.log('Testing Prisma Client...');

@@ -1,5 +1,4 @@
-import NextAuth from 'next-auth';
-
+// ./src/types/next-auth.d.ts
 declare module 'next-auth' {
   /**
    * Extend the built-in session types

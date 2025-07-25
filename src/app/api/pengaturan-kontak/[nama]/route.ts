@@ -1,15 +1,15 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import type { Prisma } from '@prisma/client';
+
+type Context = {
+  params: Promise<{ nama: string }>
+};
 
 // GET /api/pengaturan-kontak/[nama]
 // Mendapatkan pengaturan kontak berdasarkan nama
-export async function GET(
-  request: Request,
-  { params }: { params: { nama: string } }
-) {
+export async function GET(request: NextRequest, context: Context) {
   try {
-    const { nama } = params;
+    const { nama } = await context.params;
     
     const pengaturan = await prisma.pengaturanKontak.findUnique({
       where: { nama }
@@ -24,7 +24,7 @@ export async function GET(
 
     return NextResponse.json(pengaturan);
   } catch (error) {
-    console.error(`Error in GET /api/pengaturan-kontak/${params?.nama}:`, error);
+    console.error('Error in GET /api/pengaturan-kontak:', error);
     return NextResponse.json(
       { error: 'Gagal mengambil data pengaturan' },
       { status: 500 }
@@ -34,12 +34,9 @@ export async function GET(
 
 // PUT /api/pengaturan-kontak/[nama]
 // Memperbarui pengaturan kontak berdasarkan nama
-export async function PUT(
-  request: Request,
-  { params }: { params: { nama: string } }
-) {
+export async function PUT(request: NextRequest, context: Context) {
   try {
-    const { nama } = params;
+    const { nama } = await context.params;
     const { nilai, keterangan } = await request.json();
     
     if (nilai === undefined) {
@@ -59,7 +56,7 @@ export async function PUT(
 
     return NextResponse.json(updated);
   } catch (error) {
-    console.error(`Error in PUT /api/pengaturan-kontak/${params?.nama}:`, error);
+    console.error('Error in PUT /api/pengaturan-kontak:', error);
     return NextResponse.json(
       { error: 'Gagal memperbarui pengaturan' },
       { status: 500 }
@@ -69,12 +66,9 @@ export async function PUT(
 
 // DELETE /api/pengaturan-kontak/[nama]
 // Menghapus pengaturan kontak berdasarkan nama
-export async function DELETE(
-  request: Request,
-  { params }: { params: { nama: string } }
-) {
+export async function DELETE(request: NextRequest, context: Context) {
   try {
-    const { nama } = params;
+    const { nama } = await context.params;
     
     await prisma.pengaturanKontak.delete({
       where: { nama }
@@ -82,7 +76,7 @@ export async function DELETE(
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error(`Error in DELETE /api/pengaturan-kontak/${params?.nama}:`, error);
+    console.error('Error in DELETE /api/pengaturan-kontak:', error);
     return NextResponse.json(
       { error: 'Gagal menghapus pengaturan' },
       { status: 500 }

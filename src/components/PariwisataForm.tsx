@@ -2,6 +2,7 @@
 
 import { useState, ChangeEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 interface PariwisataFormProps {
   initialData?: {
@@ -116,9 +117,11 @@ export default function PariwisataForm({ initialData }: PariwisataFormProps) {
         />
         {preview && (
           <div className="mt-2">
-            <img 
-              src={preview} 
-              alt="Preview" 
+            <Image
+              src={preview}
+              alt="Preview"
+              width={128}
+              height={128}
               className="h-32 w-32 object-cover rounded"
             />
           </div>

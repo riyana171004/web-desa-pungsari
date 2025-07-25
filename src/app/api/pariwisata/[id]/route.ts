@@ -1,13 +1,14 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { put, del } from '@vercel/blob'
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+type Context = {
+  params: Promise<{ id: string }>
+}
+
+export async function GET(request: NextRequest, context: Context) {
   try {
-    const { id } = params
+    const { id } = await context.params
     const pariwisata = await prisma.pariwisata.findUnique({
       where: { id },
     })
@@ -29,12 +30,9 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(request: NextRequest, context: Context) {
   try {
-    const { id } = params
+    const { id } = await context.params
     const formData = await request.formData()
     const nama = formData.get('nama') as string
     const deskripsi = formData.get('deskripsi') as string
@@ -91,13 +89,10 @@ export async function PUT(
   }
 }
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: NextRequest, context: Context) {
   try {
-    const { id } = params
-    
+    const { id } = await context.params
+
     // Hapus file gambar terkait dari Vercel Blob
     const existing = await prisma.pariwisata.findUnique({
       where: { id },

@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
 
 export async function GET() {
   try {
@@ -15,7 +14,7 @@ export async function GET() {
       isLoggedIn: true,
       user: {
         // Tambahkan informasi user jika diperlukan
-        email: 'admin@example.com' // Ganti dengan data user yang sesuai
+        email: 'desapungsariadminn@example.com' // Ganti dengan data user yang sesuai
       }
     })
     

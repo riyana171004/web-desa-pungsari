@@ -1,8 +1,7 @@
-'use client'
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 
 // Batik Background Component
 const BatikBackground = () => (
@@ -18,73 +17,72 @@ const BatikBackground = () => (
 );
 
 interface Pariwisata {
-  id: string
-  nama: string
-  deskripsi: string
-  gambar: string
-  createdAt: string
+  id: string;
+  nama: string;
+  deskripsi: string;
+  gambar: string;
+  createdAt: string;
 }
 
 interface Dokumentasi {
-  id: string
-  nama: string
-  deskripsi: string
-  gambar: string
-  createdAt: string
+  id: string;
+  nama: string;
+  deskripsi: string;
+  gambar: string;
+  createdAt: string;
 }
 
 export default function PariwisataPage() {
-  const [data, setData] = useState<Pariwisata[]>([])
-  const [dokumentasi, setDokumentasi] = useState<Dokumentasi[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState('')
+  const [data, setData] = useState<Pariwisata[]>([]);
+  const [dokumentasi, setDokumentasi] = useState<Dokumentasi[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setIsLoading(true)
+        setIsLoading(true);
         
-        // Ambil data pariwisata
+        // Ambil data pariwisata & dokumentasi
         const [pariwisataRes, dokumentasiRes] = await Promise.all([
-          fetch('/api/pariwisata', { next: { revalidate: 10 } as any }),
-          fetch('/api/dokumentasi', { next: { revalidate: 10 } as any })
-        ])
+          fetch('/api/pariwisata'),
+          fetch('/api/dokumentasi')
+        ]);
         
-        if (!pariwisataRes.ok) throw new Error('Gagal mengambil data pariwisata')
-        if (!dokumentasiRes.ok) throw new Error('Gagal mengambil data dokumentasi')
+        if (!pariwisataRes.ok) throw new Error('Gagal mengambil data pariwisata');
+        if (!dokumentasiRes.ok) throw new Error('Gagal mengambil data dokumentasi');
         
-        const pariwisataData = await pariwisataRes.json()
-        const dokumentasiData = await dokumentasiRes.json()
+        const pariwisataData: Pariwisata[] = await pariwisataRes.json();
+        const dokumentasiData: Dokumentasi[] = await dokumentasiRes.json();
         
-        // Urutkan data berdasarkan createdAt terlama
-        const sortedPariwisata = [...pariwisataData].sort((a: Pariwisata, b: Pariwisata) => 
+        // Urutkan data
+        const sortedPariwisata = [...pariwisataData].sort((a, b) => 
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-        )
+        );
         
-        // Urutkan dokumentasi berdasarkan terbaru
-        const sortedDokumentasi = [...dokumentasiData].sort((a: Dokumentasi, b: Dokumentasi) => 
+        const sortedDokumentasi = [...dokumentasiData].sort((a, b) => 
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        )
+        );
         
-        setData(sortedPariwisata)
-        setDokumentasi(sortedDokumentasi)
+        setData(sortedPariwisata);
+        setDokumentasi(sortedDokumentasi);
       } catch (err) {
-        console.error('Error:', err)
-        setError('Gagal memuat data')
+        console.error('Error:', err);
+        setError('Gagal memuat data');
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
+    };
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -94,7 +92,7 @@ export default function PariwisataPage() {
           {error}
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -177,5 +175,5 @@ export default function PariwisataPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { Toaster } from 'react-hot-toast';
 
 type MenuItem = {
@@ -45,7 +45,6 @@ export default function AdminLayout({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
   const pathname = usePathname();
-  const router = useRouter();
 
   const handleLogout = (e: React.FormEvent) => {
     e.preventDefault();

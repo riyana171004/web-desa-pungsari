@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, } from 'next/navigation'
 import PariwisataForm from '@/components/PariwisataForm'
 
 interface Pariwisata {
@@ -13,7 +13,6 @@ interface Pariwisata {
 
 export default function EditPariwisataPage() {
   const { id } = useParams()
-  const router = useRouter()
   const [data, setData] = useState<Pariwisata | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')

@@ -3,8 +3,13 @@
 import { useEffect, useState } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
 
+type PengaturanKontak = {
+  nama: string;
+  nilai: string;
+};
+
 export default function WhatsAppButton() {
-  const [whatsappNumber, setWhatsappNumber] = useState('6281226785140'); // Nilai default jika gagal mengambil data
+  const [whatsappNumber, setWhatsappNumber] = useState('6281226785140');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -12,8 +17,8 @@ export default function WhatsAppButton() {
       try {
         const response = await fetch('/api/pengaturan-kontak');
         if (response.ok) {
-          const data = await response.json();
-          const whatsappSetting = data.find((item: any) => item.nama === 'whatsapp');
+          const data: PengaturanKontak[] = await response.json();
+          const whatsappSetting = data.find((item) => item.nama === 'whatsapp');
           if (whatsappSetting) {
             setWhatsappNumber(whatsappSetting.nilai);
           }

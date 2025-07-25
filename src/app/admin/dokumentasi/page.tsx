@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { FaPlus, FaEdit } from 'react-icons/fa'
+import { FaPlus } from 'react-icons/fa'
 import DeleteConfirmation from '@/components/DeleteConfirmation'
+import Image from 'next/image' 
 
 interface Dokumentasi {
   id: string
@@ -46,7 +47,6 @@ export default function DokumentasiAdminPage() {
       
       if (!res.ok) throw new Error('Gagal menghapus data')
       
-      // Refresh data setelah hapus
       fetchData()
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : 'Terjadi kesalahan'
@@ -92,10 +92,13 @@ export default function DokumentasiAdminPage() {
               <li key={item.id} className="p-4 hover:bg-gray-50">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
-                    <img 
+                    <Image 
                       src={item.gambar} 
                       alt={item.nama} 
+                      width={64} 
+                      height={64} 
                       className="h-16 w-16 object-cover rounded"
+                      unoptimized // supaya tidak error jika gambar dari luar
                     />
                     <div className="min-w-0 flex-1">
                       <h3 className="text-lg font-medium text-gray-900 truncate">{item.nama}</h3>

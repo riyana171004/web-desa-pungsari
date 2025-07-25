@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { FaMapMarkerAlt, FaPhone, FaEnvelope } from 'react-icons/fa';
+import Image from 'next/image';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  
+
   return (
     <footer className="w-full bg-gradient-to-r from-green-800 to-green-700 text-white mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -11,9 +11,11 @@ export default function Footer() {
           {/* About Section */}
           <div className="col-span-1">
             <div className="mb-4">
-              <img 
+              <Image 
                 src="/assets/logo.png" 
                 alt="Logo Desa Pungsari" 
+                width={64} 
+                height={64} 
                 className="h-16 w-auto mb-3"
               />
             </div>

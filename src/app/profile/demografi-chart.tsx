@@ -4,6 +4,8 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   PieChart, Pie, Cell
 } from 'recharts';
+import type { Payload, ValueType, NameType } from 'recharts/types/component/DefaultTooltipContent';
+import { TooltipProps } from 'recharts';
 
 // BPJS Kesehatan Data Type
 type BpjsData = {
@@ -580,7 +582,7 @@ export default function DemografiChart() {
                     borderBottom: '1px solid #e5e7eb',
                     paddingBottom: '0.5rem'
                   }}
-                  formatter={(value, name) => [`${value} Jiwa`, 'Jumlah']}
+                  formatter={(value) => [`${value} Jiwa`, 'Jumlah']}
                 />
                 <Bar dataKey="value" name="Jumlah" fill="url(#colorEducation)" radius={[0, 4, 4, 0]} />
               </BarChart>
@@ -590,158 +592,148 @@ export default function DemografiChart() {
       </div>
 
       {/* Grafik 5: Penggunaan Lahan */}
-      <div className="mt-12">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-green-800">Penggunaan Lahan di Desa Pungsari</h2>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h3 className="text-lg font-semibold text-green-700 mb-3">Keterangan</h3>
-            <ul className="space-y-2">
-              <li className="flex items-center">
-                <span className="w-3 h-3 rounded-full bg-indigo-500 mr-2"></span>
-                <span>Sawah</span>
-              </li>
-              <li className="flex items-center">
-                <span className="w-3 h-3 rounded-full bg-emerald-500 mr-2"></span>
-                <span>Perkebunan</span>
-              </li>
-              <li className="flex items-center">
-                <span className="w-3 h-3 rounded-full bg-amber-500 mr-2"></span>
-                <span>Hutan Rakyat</span>
-              </li>
-              <li className="flex items-center">
-                <span className="w-3 h-3 rounded-full bg-gray-500 mr-2"></span>
-                <span>Pemukiman & Lainnya</span>
-              </li>
-            </ul>
-          </div>
-          
-          <div className="md:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h3 className="text-lg font-semibold text-green-700 mb-3">Analisis</h3>
-            <ul className="space-y-3 text-gray-700">
-              <li>• Total luas Desa Pungsari: <span className="font-medium">251,45 Ha</span></li>
-              <li>• <span className="font-medium">Sawah</span> mendominasi penggunaan lahan dengan total <span className="font-medium">154 Ha</span> (61.2%)</li>
-              <li>• <span className="font-medium">Hutan Rakyat</span> menempati urutan kedua dengan <span className="font-medium">43 Ha</span> (17.1%)</li>
-              <li>• <span className="font-medium">Pemukiman & Lainnya</span> (termasuk makam dan pekarangan) seluas <span className="font-medium">48,45 Ha</span> (19.3%)</li>
-              <li>• <span className="font-medium">Perkebunan</span> memiliki porsi terkecil dengan hanya <span className="font-medium">6 Ha</span> (2.4%)</li>
-            </ul>
-          </div>
-        </div>
-        
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8">
-          <div className="h-[500px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={landUseData.filter(d => d.name !== 'TOTAL')}
-                margin={{ top: 20, right: 20, left: 0, bottom: 30 }}
-                barGap={0}
-                barCategoryGap="15%"
-              >
-                <defs>
-                  <linearGradient id="colorSawah" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.9}/>
-                    <stop offset="95%" stopColor="#4F46E5" stopOpacity={0.3}/>
-                  </linearGradient>
-                  <linearGradient id="colorPerkebunan" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.9}/>
-                    <stop offset="95%" stopColor="#10B981" stopOpacity={0.3}/>
-                  </linearGradient>
-                  <linearGradient id="colorHutanRakyat" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.9}/>
-                    <stop offset="95%" stopColor="#F59E0B" stopOpacity={0.3}/>
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
-                <XAxis 
-                  dataKey="name"
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fill: '#4B5563', fontSize: 13 }}
-                />
-                <YAxis 
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fill: '#6B7280', fontSize: 12 }}
-                  width={35}
-                />
-                <Tooltip 
-                  contentStyle={{
-                    background: 'rgba(255, 255, 255, 0.96)',
-                    border: '1px solid #e5e7eb',
-                    borderRadius: '0.5rem',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                    padding: '0.75rem 1rem',
-                    fontSize: '0.875rem'
-                  }}
-                  itemStyle={{
-                    padding: '0.25rem 0',
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                  labelStyle={{
-                    fontWeight: 600,
-                    color: '#1F2937',
-                    marginBottom: '0.5rem',
-                    borderBottom: '1px solid #e5e7eb',
-                    paddingBottom: '0.5rem'
-                  }}
-                  formatter={(value, name) => [`${value} Ha`, name]}
-                />
-                <Bar dataKey="sawah" name="Sawah" fill="url(#colorSawah)" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="perkebunan" name="Perkebunan" fill="url(#colorPerkebunan)" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="hutanRakyat" name="Hutan Rakyat" fill="url(#colorHutanRakyat)" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+<div className="mt-12">
+  <div className="text-center mb-8">
+    <h2 className="text-2xl font-bold text-green-800">Penggunaan Lahan di Desa Pungsari</h2>
+  </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <div className="h-[400px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={landUseSummary}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={120}
-                  paddingAngle={2}
-                  dataKey="value"
-                  label={({ name, percent }: { name: string; percent: number }) => `${name}: ${(percent * 100).toFixed(1)}%`}
-                  labelLine={false}
-                >
-                  {landUseSummary.map((entry: any, index: number) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip 
-                  formatter={(value) => [`${value} Ha`, 'Luas']}
-                  contentStyle={{
-                    background: 'rgba(255, 255, 255, 0.96)',
-                    border: '1px solid #e5e7eb',
-                    borderRadius: '0.5rem',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                    padding: '0.75rem 1rem',
-                    fontSize: '0.875rem'
-                  }}
-                />
-                <Legend 
-                  layout="horizontal" 
-                  verticalAlign="bottom"
-                  wrapperStyle={{ paddingTop: '20px' }}
-                  formatter={(value, entry, index) => (
-                    <span className="text-gray-700 text-sm">
-                      {value} ({landUseSummary[index].value} Ha)
-                    </span>
-                  )}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      </div>
+  <div className="grid md:grid-cols-3 gap-8 mb-8">
+    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <h3 className="text-lg font-semibold text-green-700 mb-3">Keterangan</h3>
+      <ul className="space-y-2">
+        <li className="flex items-center">
+          <span className="w-3 h-3 rounded-full bg-indigo-500 mr-2"></span>
+          <span>Sawah</span>
+        </li>
+        <li className="flex items-center">
+          <span className="w-3 h-3 rounded-full bg-emerald-500 mr-2"></span>
+          <span>Perkebunan</span>
+        </li>
+        <li className="flex items-center">
+          <span className="w-3 h-3 rounded-full bg-amber-500 mr-2"></span>
+          <span>Hutan Rakyat</span>
+        </li>
+        <li className="flex items-center">
+          <span className="w-3 h-3 rounded-full bg-gray-500 mr-2"></span>
+          <span>Pemukiman & Lainnya</span>
+        </li>
+      </ul>
+    </div>
+
+    <div className="md:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <h3 className="text-lg font-semibold text-green-700 mb-3">Analisis</h3>
+      <ul className="space-y-3 text-gray-700">
+        <li>• Total luas Desa Pungsari: <span className="font-medium">251,45 Ha</span></li>
+        <li>• <span className="font-medium">Sawah</span> mendominasi penggunaan lahan dengan total <span className="font-medium">154 Ha</span> (61.2%)</li>
+        <li>• <span className="font-medium">Hutan Rakyat</span> menempati urutan kedua dengan <span className="font-medium">43 Ha</span> (17.1%)</li>
+        <li>• <span className="font-medium">Pemukiman & Lainnya</span> (termasuk makam dan pekarangan) seluas <span className="font-medium">48,45 Ha</span> (19.3%)</li>
+        <li>• <span className="font-medium">Perkebunan</span> memiliki porsi terkecil dengan hanya <span className="font-medium">6 Ha</span> (2.4%)</li>
+      </ul>
+    </div>
+  </div>
+
+  {/* Bar Chart */}
+  <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8">
+    <div className="h-[500px]">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart
+          data={landUseData.filter(d => d.name !== 'TOTAL')}
+          margin={{ top: 20, right: 20, left: 0, bottom: 30 }}
+          barGap={0}
+          barCategoryGap="15%"
+        >
+          <defs>
+            <linearGradient id="colorSawah" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.9}/>
+              <stop offset="95%" stopColor="#4F46E5" stopOpacity={0.3}/>
+            </linearGradient>
+            <linearGradient id="colorPerkebunan" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#10B981" stopOpacity={0.9}/>
+              <stop offset="95%" stopColor="#10B981" stopOpacity={0.3}/>
+            </linearGradient>
+            <linearGradient id="colorHutanRakyat" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.9}/>
+              <stop offset="95%" stopColor="#F59E0B" stopOpacity={0.3}/>
+            </linearGradient>
+          </defs>
+          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+          <XAxis 
+            dataKey="name"
+            axisLine={false}
+            tickLine={false}
+            tick={{ fill: '#4B5563', fontSize: 13 }}
+          />
+          <YAxis 
+            axisLine={false}
+            tickLine={false}
+            tick={{ fill: '#6B7280', fontSize: 12 }}
+            width={35}
+          />
+          <Tooltip 
+            contentStyle={{
+              background: 'rgba(255, 255, 255, 0.96)',
+              border: '1px solid #e5e7eb',
+              borderRadius: '0.5rem',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              padding: '0.75rem 1rem',
+              fontSize: '0.875rem'
+            }}
+            formatter={(value: number, name: string) => [`${value} Ha`, name]}
+          />
+          <Bar dataKey="sawah" name="Sawah" fill="url(#colorSawah)" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="perkebunan" name="Perkebunan" fill="url(#colorPerkebunan)" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="hutanRakyat" name="Hutan Rakyat" fill="url(#colorHutanRakyat)" radius={[4, 4, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+
+  {/* Pie Chart */}
+  <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+    <div className="h-[400px]">
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <Pie
+            data={landUseSummary}
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={120}
+            paddingAngle={2}
+            dataKey="value"
+            label={({ name, percent }: { name: string; percent: number }) => `${name}: ${(percent * 100).toFixed(1)}%`}
+            labelLine={false}
+          >
+            {landUseSummary.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={entry.color} />
+            ))}
+          </Pie>
+          <Tooltip 
+            formatter={(value: number) => [`${value} Ha`, 'Luas']}
+            contentStyle={{
+              background: 'rgba(255, 255, 255, 0.96)',
+              border: '1px solid #e5e7eb',
+              borderRadius: '0.5rem',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              padding: '0.75rem 1rem',
+              fontSize: '0.875rem'
+            }}
+          />
+          <Legend 
+            layout="horizontal" 
+            verticalAlign="bottom"
+            wrapperStyle={{ paddingTop: '20px' }}
+            formatter={(value, entry, index) => (
+              <span className="text-gray-700 text-sm">
+                {value} ({landUseSummary[index].value} Ha)
+              </span>
+            )}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+</div>
 
       {/* Grafik 6: Mata Pencaharian */}
       <div className="mt-12">
@@ -918,33 +910,40 @@ export default function DemografiChart() {
                     paddingBottom: '0.5rem',
                     display: 'block'
                   }}
-                  formatter={(value: number, name: string, props: any) => {
-                    const percentage = (props?.value ? (props.value / 1504) * 100 : 0).toFixed(1);
-                    return [
-                      <div key="tooltip-content" className="w-full">
-                        <div className="font-medium">{props.payload.name}</div>
-                        <div className="flex justify-between w-full">
-                          <span className="text-gray-600">Jumlah:</span>
-                          <span className="font-medium">{value} Jiwa</span>
-                        </div>
-                        <div className="flex justify-between w-full">
-                          <span className="text-gray-600">Persentase:</span>
-                          <span className="font-medium">{percentage}%</span>
-                        </div>
-                        {props.payload?.items && (
-                          <div className="mt-2 pt-2 border-t border-gray-100">
-                            <div className="text-xs font-medium text-gray-500 mb-1">Rincian:</div>
-                            {props.payload.items.map((item: OccupationItem, i: number) => (
-                              <div key={i} className="flex justify-between text-xs">
-                                <span>{item.name}:</span>
-                                <span className="font-medium">{item.value} Jiwa</span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ];
-                  }}
+                  formatter={(
+                  value: ValueType,
+                  _name: NameType,
+  item: Payload<ValueType, NameType>
+) => {
+  const payload = item?.payload as OccupationCategory;
+  const percentage = ((payload?.value ?? 0) / 1504 * 100).toFixed(1);
+
+  return [
+    <div key="tooltip-content" className="w-full">
+      <div className="font-medium">{payload?.name}</div>
+      <div className="flex justify-between w-full">
+        <span className="text-gray-600">Jumlah:</span>
+        <span className="font-medium">{value} Jiwa</span>
+      </div>
+      <div className="flex justify-between w-full">
+        <span className="text-gray-600">Persentase:</span>
+        <span className="font-medium">{percentage}%</span>
+      </div>
+      {payload?.items && (
+        <div className="mt-2 pt-2 border-t border-gray-100">
+          <div className="text-xs font-medium text-gray-500 mb-1">Rincian:</div>
+          {payload.items.map((item, i) => (
+            <div key={i} className="flex justify-between text-xs">
+              <span>{item.name}:</span>
+              <span className="font-medium">{item.value} Jiwa</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  ];
+}}
+
                 />
                 <Bar 
                   dataKey="value"
@@ -1071,12 +1070,16 @@ export default function DemografiChart() {
                     tickMargin={10}
                   />
                   
-                  <Tooltip 
-                    content={({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
-                      if (active && payload && payload.length) {
-                        const data = bpjsData.find(item => item.name === label);
-                        if (!data) return null;
-                        
+                  <Tooltip
+  content={({
+    active,
+    payload,
+    label,
+  }: TooltipProps<number, string>) => {
+    if (active && payload && payload.length) {
+      const data = bpjsData.find((item) => item.name === label);
+      if (!data) return null;
+      
                         return (
                           <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
                             <p className="font-semibold text-gray-900 mb-2">{label}</p>
@@ -1375,6 +1378,7 @@ const bpjsData: BpjsData[] = [
   { name: 'Karangnongko RT 12', aktif: 158, tidakAktif: 64, belumDaftar: 20, total: 242, persenAktif: 65.29, persenTidakAktif: 26.45, persenBelumDaftar: 8.26 },
 ];
 
+
 // Land use data by village
 const landUseData = [
   { 
@@ -1589,7 +1593,7 @@ const groupedByCategory = occupationData.reduce<OccupationCategory[]>((acc, curr
 }, []);
 
 // Sort by total value
-const sortedOccupations: OccupationItem[] = [...occupationData].sort((a, b) => b.value - a.value);
+// const sortedOccupations: OccupationItem[] = [...occupationData].sort((a, b) => b.value - a.value);
 
 // Education level data
 const educationData = [

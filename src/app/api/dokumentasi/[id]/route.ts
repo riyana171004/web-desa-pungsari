@@ -1,33 +1,24 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { put, del } from '@vercel/blob'
 
-type ErrorWithMessage = {
-  message: string;
-};
-
-interface Params {
-  params: {
-    id: string
-  }
+type Context = {
+  params: Promise<{ id: string }>
 }
 
-export async function GET(request: Request, { params }: Params) {
+export async function GET(_request: NextRequest, context: Context) {
   try {
-    const { id } = params
-    const data = await prisma.dokumentasi.findUnique({
-      where: { id },
-    })
+    const { id } = await context.params
+
+    const data = await prisma.dokumentasi.findUnique({ where: { id } })
 
     if (!data) {
-      return NextResponse.json(
-        { error: 'Data tidak ditemukan' },
-        { status: 404 }
-      )
+      return NextResponse.json({ error: 'Data tidak ditemukan' }, { status: 404 })
     }
 
     return NextResponse.json(data)
   } catch (error) {
+    console.error('GET Error:', error)
     return NextResponse.json(
       { error: 'Gagal mengambil data dokumentasi' },
       { status: 500 }
@@ -35,31 +26,25 @@ export async function GET(request: Request, { params }: Params) {
   }
 }
 
-export async function PUT(request: Request, { params }: Params) {
+export async function PUT(request: NextRequest, context: Context) {
   try {
-    const { id } = params
+    const { id } = await context.params
     const formData = await request.formData()
+
     const nama = formData.get('nama') as string
     const deskripsi = formData.get('deskripsi') as string
     const file = formData.get('gambar') as File | null
 
-    // Dapatkan data lama untuk menghapus file lama jika ada file baru
-    const existing = await prisma.dokumentasi.findUnique({
-      where: { id },
-    })
+    const existing = await prisma.dokumentasi.findUnique({ where: { id } })
 
     if (!existing) {
-      return NextResponse.json(
-        { error: 'Data tidak ditemukan' },
-        { status: 404 }
-      )
+      return NextResponse.json({ error: 'Data tidak ditemukan' }, { status: 404 })
     }
 
     let gambar = existing.gambar
 
-    // Jika ada file baru, upload ke Vercel Blob dan hapus yang lama
+    // Jika ada file baru, hapus file lama di Blob dan upload yang baru
     if (file) {
-      // Hapus file lama dari Vercel Blob
       if (existing.gambar) {
         try {
           await del(existing.gambar)
@@ -68,26 +53,20 @@ export async function PUT(request: Request, { params }: Params) {
         }
       }
 
-      // Upload file baru ke Vercel Blob
       const bytes = await file.arrayBuffer()
       const filename = `${Date.now()}-${file.name}`
       const blob = await put(filename, bytes, { access: 'public' })
-      gambar = blob.url // Simpan URL dari Vercel Blob
+      gambar = blob.url
     }
 
-    // Update data di database
-    const data = await prisma.dokumentasi.update({
+    const updated = await prisma.dokumentasi.update({
       where: { id },
-      data: {
-        nama,
-        deskripsi,
-        gambar,
-      },
+      data: { nama, deskripsi, gambar },
     })
 
-    return NextResponse.json(data)
+    return NextResponse.json(updated)
   } catch (error) {
-    console.error('Error:', error)
+    console.error('PUT Error:', error)
     return NextResponse.json(
       { error: 'Gagal memperbarui dokumentasi' },
       { status: 500 }
@@ -95,23 +74,16 @@ export async function PUT(request: Request, { params }: Params) {
   }
 }
 
-export async function DELETE(request: Request, { params }: Params) {
+export async function DELETE(_request: NextRequest, context: Context) {
   try {
-    const { id } = params
+    const { id } = await context.params
 
-    // Dapatkan data untuk menghapus file
-    const existing = await prisma.dokumentasi.findUnique({
-      where: { id },
-    })
+    const existing = await prisma.dokumentasi.findUnique({ where: { id } })
 
     if (!existing) {
-      return NextResponse.json(
-        { error: 'Data tidak ditemukan' },
-        { status: 404 }
-      )
+      return NextResponse.json({ error: 'Data tidak ditemukan' }, { status: 404 })
     }
 
-    // Hapus file gambar dari Vercel Blob
     if (existing.gambar) {
       try {
         await del(existing.gambar)
@@ -120,14 +92,10 @@ export async function DELETE(request: Request, { params }: Params) {
       }
     }
 
-    // Hapus data dari database
-    await prisma.dokumentasi.delete({
-      where: { id },
-    })
-
+    await prisma.dokumentasi.delete({ where: { id } })
     return new Response(null, { status: 204 })
   } catch (error) {
-    console.error('Error:', error)
+    console.error('DELETE Error:', error)
     return NextResponse.json(
       { error: 'Gagal menghapus dokumentasi' },
       { status: 500 }

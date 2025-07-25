@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from 'next/navigation';
 
 const menu = [
@@ -12,7 +13,6 @@ const menu = [
 export default function Header() {
   const pathname = usePathname();
   
-  // Special handling for home page
   const isActive = (href: string) => {
     if (href === '/') {
       return pathname === href;
@@ -23,7 +23,13 @@ export default function Header() {
   return (
     <header className="w-full flex items-center justify-between py-5 px-6 bg-gradient-to-r from-green-800 to-green-700 shadow-lg">
       <div className="flex items-center">
-        <img src="/assets/logo.png" alt="Logo Kantor Desa Pungsari" className="h-14 w-auto mr-3" />
+        <Image 
+          src="/assets/logo.png" 
+          alt="Logo Kantor Desa Pungsari" 
+          width={56}   // set sesuai ukuran logo
+          height={56}  // set sesuai ukuran logo
+          className="h-14 w-auto mr-3"
+        />
         <div className="hidden md:block">
           <h1 className="text-xl font-bold text-white">Desa Pungsari</h1>
           <p className="text-xs text-yellow-100">Kecamatan Plupuh, Sragen</p>

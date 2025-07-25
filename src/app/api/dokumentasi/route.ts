@@ -9,6 +9,7 @@ export async function GET() {
     })
     return NextResponse.json(data)
   } catch (error) {
+    console.error('Error:', error)
     return NextResponse.json(
       { error: 'Gagal mengambil data dokumentasi' },
       { status: 500 }
